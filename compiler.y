@@ -11,10 +11,12 @@ char* user_input;
 
 %union {
     char *sval;
+    int ival;
 }
 
-%token PRINT EOL OPENBR CLOSEBR READ
+%token PRINT EOL OPENBR CLOSEBR READ STR
 %token <sval> STRING
+%token <ival> INT
 
 %%
 
@@ -24,7 +26,9 @@ program:
     ;
 
 print:
-    | PRINT OPENBR STRING CLOSEBR { printf("%s\n", $3); }
+    | PRINT OPENBR STRING CLOSEBR { printf("%s\n", $3);  }
+    | PRINT OPENBR CLOSEBR {printf("\n"); }
+    | PRINT OPENBR INT CLOSEBR { printf("%d\n", $3); }
     ;
     
 input: 
@@ -38,7 +42,7 @@ void yyerror(const char *s) {
     exit(1);
 }
 
-int main(void) {
+int main(void){
     yyparse();
     printf("%s\n", user_input);
     return 0;

@@ -59,7 +59,10 @@ extern int yydebug;
     OPENBR = 260,                  /* OPENBR  */
     CLOSEBR = 261,                 /* CLOSEBR  */
     READ = 262,                    /* READ  */
-    STRING = 263                   /* STRING  */
+    STR = 263,                     /* STR  */
+    STRING = 264,                  /* STRING  */
+    INT = 265,                     /* INT  */
+    STRING_NO_QUOTES = 266         /* STRING_NO_QUOTES  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -73,7 +76,10 @@ extern int yydebug;
 #define OPENBR 260
 #define CLOSEBR 261
 #define READ 262
-#define STRING 263
+#define STR 263
+#define STRING 264
+#define INT 265
+#define STRING_NO_QUOTES 266
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -82,8 +88,9 @@ union YYSTYPE
 #line 12 "compiler.y"
 
     char *sval;
+    int ival;
 
-#line 87 "y.tab.h"
+#line 94 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
