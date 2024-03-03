@@ -61,8 +61,7 @@ extern int yydebug;
     READ = 262,                    /* READ  */
     STR = 263,                     /* STR  */
     STRING = 264,                  /* STRING  */
-    INT = 265,                     /* INT  */
-    STRING_NO_QUOTES = 266         /* STRING_NO_QUOTES  */
+    INT = 265                      /* INT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -79,7 +78,6 @@ extern int yydebug;
 #define STR 263
 #define STRING 264
 #define INT 265
-#define STRING_NO_QUOTES 266
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -90,7 +88,7 @@ union YYSTYPE
     char *sval;
     int ival;
 
-#line 94 "y.tab.h"
+#line 92 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
