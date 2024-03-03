@@ -76,11 +76,8 @@
 void yyerror(const char *s);
 int yylex(void);
 
-extern int yylineno;
-extern char* yytext;
 
-
-#line 84 "y.tab.c"
+#line 81 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -128,10 +125,7 @@ extern int yydebug;
     EOL = 259,                     /* EOL  */
     OPENBR = 260,                  /* OPENBR  */
     CLOSEBR = 261,                 /* CLOSEBR  */
-    STR = 262,                     /* STR  */
-    ID = 263,                      /* ID  */
-    STRING = 264,                  /* STRING  */
-    INT = 265                      /* INT  */
+    STRING = 262                   /* STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -144,21 +138,17 @@ extern int yydebug;
 #define EOL 259
 #define OPENBR 260
 #define CLOSEBR 261
-#define STR 262
-#define ID 263
-#define STRING 264
-#define INT 265
+#define STRING 262
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "compiler.y"
+#line 11 "compiler.y"
 
-    int ival;
     char *sval;
 
-#line 162 "y.tab.c"
+#line 152 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -185,15 +175,10 @@ enum yysymbol_kind_t
   YYSYMBOL_EOL = 4,                        /* EOL  */
   YYSYMBOL_OPENBR = 5,                     /* OPENBR  */
   YYSYMBOL_CLOSEBR = 6,                    /* CLOSEBR  */
-  YYSYMBOL_STR = 7,                        /* STR  */
-  YYSYMBOL_ID = 8,                         /* ID  */
-  YYSYMBOL_STRING = 9,                     /* STRING  */
-  YYSYMBOL_INT = 10,                       /* INT  */
-  YYSYMBOL_YYACCEPT = 11,                  /* $accept  */
-  YYSYMBOL_program = 12,                   /* program  */
-  YYSYMBOL_statement = 13,                 /* statement  */
-  YYSYMBOL_int_expression = 14,            /* int_expression  */
-  YYSYMBOL_string_expression = 15          /* string_expression  */
+  YYSYMBOL_STRING = 7,                     /* STRING  */
+  YYSYMBOL_YYACCEPT = 8,                   /* $accept  */
+  YYSYMBOL_program = 9,                    /* program  */
+  YYSYMBOL_statement = 10                  /* statement  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -521,19 +506,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   11
+#define YYLAST   5
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  9
+#define YYNRULES  5
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  16
+#define YYNSTATES  9
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   265
+#define YYMAXUTOK   262
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -573,14 +558,14 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10
+       5,     6,     7
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    29,    29,    30,    33,    34,    35,    36,    39,    42
+       0,    20,    20,    21,    24,    25
 };
 #endif
 
@@ -597,8 +582,7 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "PRINT", "EOL",
-  "OPENBR", "CLOSEBR", "STR", "ID", "STRING", "INT", "$accept", "program",
-  "statement", "int_expression", "string_expression", YY_NULLPTR
+  "OPENBR", "CLOSEBR", "STRING", "$accept", "program", "statement", YY_NULLPTR
 };
 
 static const char *
@@ -608,7 +592,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-7)
+#define YYPACT_NINF (-5)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -622,8 +606,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -7,     2,    -7,    -5,     3,    -6,    -7,    -7,    -7,    -4,
-       4,    -7,     1,    -7,     5,    -7
+      -5,     0,    -5,    -4,    -2,    -3,    -5,    -1,    -5
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -631,20 +614,19 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     4,     1,     0,     0,     0,     9,     6,     3,     0,
-       0,     8,     0,     7,     0,     5
+       2,     4,     1,     0,     0,     0,     3,     0,     5
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -7,    -7,    -7,    -7,    -7
+      -5,    -5,    -5
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     1,     4,    12,     7
+       0,     1,     4
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -652,34 +634,31 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       5,     9,     2,    10,     6,     3,    11,     8,    14,     0,
-      13,    15
+       2,     5,     6,     3,     7,     8
 };
 
 static const yytype_int8 yycheck[] =
 {
-       5,     7,     0,     9,     9,     3,    10,     4,     7,    -1,
-       6,     6
+       0,     5,     4,     3,     7,     6
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    12,     0,     3,    13,     5,     9,    15,     4,     7,
-       9,    10,    14,     6,     7,     6
+       0,     9,     0,     3,    10,     5,     4,     7,     6
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    11,    12,    12,    13,    13,    13,    13,    14,    15
+       0,     8,     9,     9,    10,    10
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     3,     0,     6,     2,     4,     1,     1
+       0,     2,     0,     3,     0,     4
 };
 
 
@@ -1142,38 +1121,14 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 5: /* statement: PRINT OPENBR STR int_expression STR CLOSEBR  */
-#line 34 "compiler.y"
-                                                  { printf("%d\n", (yyvsp[-2].ival)); }
-#line 1149 "y.tab.c"
-    break;
-
-  case 6: /* statement: PRINT string_expression  */
-#line 35 "compiler.y"
-                              { printf("%s\n", (yyvsp[0].sval)); }
-#line 1155 "y.tab.c"
-    break;
-
-  case 7: /* statement: PRINT OPENBR STRING CLOSEBR  */
-#line 36 "compiler.y"
+  case 5: /* statement: PRINT OPENBR STRING CLOSEBR  */
+#line 25 "compiler.y"
                                   { printf("%s\n", (yyvsp[-1].sval)); }
-#line 1161 "y.tab.c"
-    break;
-
-  case 8: /* int_expression: INT  */
-#line 39 "compiler.y"
-                    { (yyval.ival) = (yyvsp[0].ival); }
-#line 1167 "y.tab.c"
-    break;
-
-  case 9: /* string_expression: STRING  */
-#line 42 "compiler.y"
-                          { (yyval.sval) = (yyvsp[0].sval); }
-#line 1173 "y.tab.c"
+#line 1128 "y.tab.c"
     break;
 
 
-#line 1177 "y.tab.c"
+#line 1132 "y.tab.c"
 
       default: break;
     }
@@ -1366,11 +1321,11 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 45 "compiler.y"
+#line 28 "compiler.y"
 
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Parse error: %s\n", s);
+    fprintf(stderr, "Syntex error %s\n", s);
     exit(1);
 }
 
@@ -1378,4 +1333,3 @@ int main(void) {
     yyparse();
     return 0;
 }
-

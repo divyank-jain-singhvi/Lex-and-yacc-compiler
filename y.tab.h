@@ -58,10 +58,7 @@ extern int yydebug;
     EOL = 259,                     /* EOL  */
     OPENBR = 260,                  /* OPENBR  */
     CLOSEBR = 261,                 /* CLOSEBR  */
-    STR = 262,                     /* STR  */
-    ID = 263,                      /* ID  */
-    STRING = 264,                  /* STRING  */
-    INT = 265                      /* INT  */
+    STRING = 262                   /* STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -74,21 +71,17 @@ extern int yydebug;
 #define EOL 259
 #define OPENBR 260
 #define CLOSEBR 261
-#define STR 262
-#define ID 263
-#define STRING 264
-#define INT 265
+#define STRING 262
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "compiler.y"
+#line 11 "compiler.y"
 
-    int ival;
     char *sval;
 
-#line 92 "y.tab.h"
+#line 85 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
