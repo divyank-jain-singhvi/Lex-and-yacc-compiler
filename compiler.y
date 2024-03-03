@@ -5,6 +5,7 @@
 
 void yyerror(const char *s);
 int yylex(void);
+char* user_input;
 
 %}
 
@@ -12,17 +13,22 @@ int yylex(void);
     char *sval;
 }
 
-%token PRINT EOL OPENBR CLOSEBR
+%token PRINT EOL OPENBR CLOSEBR READ
 %token <sval> STRING
 
 %%
 
 program: 
-    | program statement EOL
+    | program print EOL
+    | program input EOL 
     ;
 
-statement:
+print:
     | PRINT OPENBR STRING CLOSEBR { printf("%s\n", $3); }
+    ;
+    
+input: 
+    | READ OPENBR STRING CLOSEBR { user_input = strdup($3); }
     ;
 
 %%
@@ -34,5 +40,6 @@ void yyerror(const char *s) {
 
 int main(void) {
     yyparse();
+    printf("%s\n", user_input);
     return 0;
 }

@@ -75,9 +75,10 @@
 
 void yyerror(const char *s);
 int yylex(void);
+char* user_input;
 
 
-#line 81 "y.tab.c"
+#line 82 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -125,7 +126,8 @@ extern int yydebug;
     EOL = 259,                     /* EOL  */
     OPENBR = 260,                  /* OPENBR  */
     CLOSEBR = 261,                 /* CLOSEBR  */
-    STRING = 262                   /* STRING  */
+    READ = 262,                    /* READ  */
+    STRING = 263                   /* STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -138,17 +140,18 @@ extern int yydebug;
 #define EOL 259
 #define OPENBR 260
 #define CLOSEBR 261
-#define STRING 262
+#define READ 262
+#define STRING 263
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 11 "compiler.y"
+#line 12 "compiler.y"
 
     char *sval;
 
-#line 152 "y.tab.c"
+#line 155 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -175,10 +178,12 @@ enum yysymbol_kind_t
   YYSYMBOL_EOL = 4,                        /* EOL  */
   YYSYMBOL_OPENBR = 5,                     /* OPENBR  */
   YYSYMBOL_CLOSEBR = 6,                    /* CLOSEBR  */
-  YYSYMBOL_STRING = 7,                     /* STRING  */
-  YYSYMBOL_YYACCEPT = 8,                   /* $accept  */
-  YYSYMBOL_program = 9,                    /* program  */
-  YYSYMBOL_statement = 10                  /* statement  */
+  YYSYMBOL_READ = 7,                       /* READ  */
+  YYSYMBOL_STRING = 8,                     /* STRING  */
+  YYSYMBOL_YYACCEPT = 9,                   /* $accept  */
+  YYSYMBOL_program = 10,                   /* program  */
+  YYSYMBOL_print = 11,                     /* print  */
+  YYSYMBOL_input = 12                      /* input  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -506,19 +511,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   5
+#define YYLAST   13
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  8
+#define YYNTOKENS  9
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  5
+#define YYNRULES  8
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  9
+#define YYNSTATES  15
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   262
+#define YYMAXUTOK   263
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -558,14 +563,14 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7
+       5,     6,     7,     8
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    20,    20,    21,    24,    25
+       0,    21,    21,    22,    23,    26,    27,    30,    31
 };
 #endif
 
@@ -582,7 +587,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "PRINT", "EOL",
-  "OPENBR", "CLOSEBR", "STRING", "$accept", "program", "statement", YY_NULLPTR
+  "OPENBR", "CLOSEBR", "READ", "STRING", "$accept", "program", "print",
+  "input", YY_NULLPTR
 };
 
 static const char *
@@ -606,7 +612,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -5,     0,    -5,    -4,    -2,    -3,    -5,    -1,    -5
+      -5,     0,    -5,    -4,    -3,     1,     2,     3,     4,    -5,
+      -5,    -2,     7,    -5,    -5
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -614,19 +621,20 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     4,     1,     0,     0,     0,     3,     0,     5
+       2,     5,     1,     0,     0,     0,     0,     0,     0,     3,
+       4,     0,     0,     6,     8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -5,    -5,    -5
+      -5,    -5,    -5,    -5
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     1,     4
+       0,     1,     5,     6
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -634,31 +642,34 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2,     5,     6,     3,     7,     8
+       2,     7,     8,     3,    13,     9,    10,     4,     0,     0,
+       0,    11,    12,    14
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     5,     4,     3,     7,     6
+       0,     5,     5,     3,     6,     4,     4,     7,    -1,    -1,
+      -1,     8,     8,     6
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     9,     0,     3,    10,     5,     4,     7,     6
+       0,    10,     0,     3,     7,    11,    12,     5,     5,     4,
+       4,     8,     8,     6,     6
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     8,     9,     9,    10,    10
+       0,     9,    10,    10,    10,    11,    11,    12,    12
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     3,     0,     4
+       0,     2,     0,     3,     3,     0,     4,     0,     4
 };
 
 
@@ -1121,14 +1132,20 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 5: /* statement: PRINT OPENBR STRING CLOSEBR  */
-#line 25 "compiler.y"
+  case 6: /* print: PRINT OPENBR STRING CLOSEBR  */
+#line 27 "compiler.y"
                                   { printf("%s\n", (yyvsp[-1].sval)); }
-#line 1128 "y.tab.c"
+#line 1139 "y.tab.c"
+    break;
+
+  case 8: /* input: READ OPENBR STRING CLOSEBR  */
+#line 31 "compiler.y"
+                                 { user_input = strdup((yyvsp[-1].sval)); }
+#line 1145 "y.tab.c"
     break;
 
 
-#line 1132 "y.tab.c"
+#line 1149 "y.tab.c"
 
       default: break;
     }
@@ -1321,7 +1338,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 28 "compiler.y"
+#line 34 "compiler.y"
 
 
 void yyerror(const char *s) {
@@ -1331,5 +1348,6 @@ void yyerror(const char *s) {
 
 int main(void) {
     yyparse();
+    printf("%s\n", user_input);
     return 0;
 }

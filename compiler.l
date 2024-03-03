@@ -5,7 +5,8 @@
 
 %%
 
-"print"   { return PRINT; }
+"print" { return PRINT; }
+"read"	{return READ; }
 "("	{ return OPENBR; }
 ")"	{ return CLOSEBR; }
 \"[^\"\n]*\" {
