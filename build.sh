@@ -1,4 +1,4 @@
-yacc -d compiler.y
 lex compiler.l
-cc y.tab.c lex.yy.c -o compiler
+yacc -d compiler.y
+gcc -o compiler y.tab.c lex.yy.c -ll
 ./compiler
